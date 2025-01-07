@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/mecbob/terraform-test.git'
+                git branch: 'main', url: 'https://github.com/mikesobukonla/terraform-test-ms.git'
             }
         }
 
@@ -28,6 +28,13 @@ pipeline {
             steps {
                 input message: "Approve deployment?", ok: "Deploy"
                 sh 'terraform apply tfplan'
+            }
+        }
+
+        stage('Destroy Terraform') {
+            steps {
+                input message: "Approve destruction?", ok: "Destroy"
+                sh 'terraform destroy -auto-approve'
             }
         }
     }
